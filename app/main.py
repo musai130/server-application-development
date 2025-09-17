@@ -1,3 +1,4 @@
+from fastapi.staticfiles import StaticFiles
 import uvicorn
 from fastapi import FastAPI
 from config import settings
@@ -21,6 +22,10 @@ async def lifespan(app: FastAPI):
 main_app = FastAPI(
     lifespan=lifespan,
 )
+
+
+main_app.mount("/static", StaticFiles(directory="static"), name="static")
+
 main_app.include_router(
     api_router,
 )
